@@ -1,0 +1,10 @@
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+_commit: 1.1.0
+_src_path: https://github.com/Kludex/python-template
+cli: false
+description: A FileResponse that supports HTTP Range and If-Range headers!
+email: marcelotryle@gmail.com
+full_name: Marcelo Trylesinski
+github: Kludex
+project_name: file-response
+twitter: marcelotryle

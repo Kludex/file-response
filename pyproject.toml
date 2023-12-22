@@ -1,0 +1,73 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = 'hatchling.build'
+
+[project]
+name = "file-response"
+description = "A FileResponse that supports HTTP Range and If-Range headers!"
+readme = "README.md"
+authors = [{ name = "Marcelo Trylesinski", email = "marcelotryle@gmail.com" }]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "License :: OSI Approved :: MIT License",
+    "Intended Audience :: Developers",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+license = "MIT"
+requires-python = ">=3.8"
+dependencies = ["starlette"]
+optional-dependencies = {}
+dynamic = ["version"]
+
+[project.urls]
+Homepage = "https://github.com/Kludex/file-response"
+Source = "https://github.com/Kludex/file-response"
+Twitter = "https://twitter.com/marcelotryle"
+Funding = "https://github.com/sponsors/Kludex"
+
+[tool.hatch.version]
+path = "file_response/__init__.py"
+
+[tool.hatch.envs.dev]
+dependencies = ["mypy", "ruff", "pre-commit", "bpython"]
+
+[tool.hatch.envs.test]
+dependencies = ["coverage[toml]", "pytest", "pytest-sugar", "dirty-equals", "httpx", "pytest-asyncio", "baize"]
+
+[[tool.hatch.envs.test.matrix]]
+python = ["3.8", "3.9", "3.10", "3.11", "3.12"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint.isort]
+combine-as-imports = true
+
+[tool.mypy]
+strict = true
+
+[tool.black]
+target-version = ["py38"]
+
+[tool.pytest.ini_options]
+addopts = ["--strict-config", "--strict-markers"]
+filterwarnings = ["error"]
+
+[tool.coverage.run]
+source_pkgs = ["file_response", "tests"]
+
+[tool.coverage.report]
+fail_under = 100
+show_missing = true
+skip_covered = true
