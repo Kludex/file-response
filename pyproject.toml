@@ -37,10 +37,18 @@ Funding = "https://github.com/sponsors/Kludex"
 path = "file_response/__init__.py"
 
 [tool.hatch.envs.dev]
-dependencies = ["mypy", "ruff", "pre-commit", "bpython"]
+dependencies = ["mypy", "ruff==0.1.9", "pre-commit", "bpython"]
 
 [tool.hatch.envs.test]
-dependencies = ["coverage[toml]", "pytest", "pytest-sugar", "dirty-equals", "httpx", "pytest-asyncio", "baize"]
+dependencies = [
+    "coverage[toml]",
+    "pytest",
+    "pytest-sugar",
+    "dirty-equals",
+    "httpx",
+    "pytest-asyncio",
+    "baize",
+]
 
 [[tool.hatch.envs.test.matrix]]
 python = ["3.8", "3.9", "3.10", "3.11", "3.12"]
@@ -51,11 +59,18 @@ select = ["E", "F", "I"]
 [tool.ruff]
 line-length = 120
 
+[tool.ruff.extend-per-file-ignores]
+"tests/test_response.py" = ["E501"]
+
 [tool.ruff.lint.isort]
 combine-as-imports = true
 
 [tool.mypy]
 strict = true
+
+[[tool.mypy.overrides]]
+module = "tests.test_response"
+ignore_errors = true
 
 [tool.black]
 target-version = ["py38"]

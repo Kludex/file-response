@@ -31,7 +31,7 @@ class RangeNotSatisfiable(Exception):
         self.max_size = max_size
 
 
-class FileResponse(Response):
+class FileResponse(Response):  # type: ignore[misc]
     chunk_size = 64 * 1024
 
     def __init__(
@@ -102,10 +102,10 @@ class FileResponse(Response):
             try:
                 ranges = self._parse_range_header(http_range, stat_result.st_size)
             except MalformedRangeHeader as exc:
-                return await PlainTextResponse(exc.content, status_code=400)(scope, receive, send)
+                return await PlainTextResponse(exc.content, status_code=400)(scope, receive, send)  # type: ignore
             except RangeNotSatisfiable as exc:
                 response = PlainTextResponse(status_code=416, headers={"Content-Range": f"*/{exc.max_size}"})
-                return await response(scope, receive, send)
+                return await response(scope, receive, send)  # type: ignore
 
             if len(ranges) == 1:
                 start, end = ranges[0]
@@ -117,7 +117,13 @@ class FileResponse(Response):
             await self.background()  # pragma: no cover
 
     async def _handle_simple(self, send: Send, send_header_only: bool) -> None:
-        await send({"type": "http.response.start", "status": self.status_code, "headers": self.raw_headers})
+        await send(
+            {
+                "type": "http.response.start",
+                "status": self.status_code,
+                "headers": self.raw_headers,
+            }
+        )
         if send_header_only:
             await send({"type": "http.response.body", "body": b"", "more_body": False})
         else:
